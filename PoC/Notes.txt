@@ -1,0 +1,39 @@
+for the check if item is stored
+first question it will ask is the what do we want to have checked
+    Client Identifier, Project*, or shipping identifier
+
+Thinking of breaking out the window into its own file and leave main to be for the processing.
+Going to have to do some database design for the items
+
+Dont worry about the slight format issues such as with DellOptiplex being one word as this just need sto be functional
+enough to present  before I leave
+
+Now that I think about it, I might not even want to do a interface because of how simplistic this is going to be. I am probably going
+to do the database implementation though because then once the SQL gets written out then I can just call the same tables and what not during
+the creation
+
+*For Project, That will be implemented later
+
+From Superior
+Checked in/ Out
+Meaning that has it arrived at HQ vs has it gone out to site
+USeable by sales person
+Project its assigned to
+Location
+Date installed
+Ad logins
+Email usage
+Autotask API integration
+Auditing Functions
+
+Using Flask for WEb Development
+Flask
+Flask-SQLAlchemy
+Flask-User
+Flask-Login
+Flask-Admin
+
+Update: 4/11/2019
+I have figured out how this is going to come out. This is definately feasable, it just that school is getting in the way
+but thats not a problem because this is just a project that I am doing on my own. This will definately be worked on when I am
+out of school and when I have more time.

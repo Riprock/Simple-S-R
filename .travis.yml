@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.7"
+env:
+  - FLASK=1.0.2
+services:
+  - mysql
+install:
+  - pip install -q Flask==$FLASK
+  - pip install -q requirements.txt
+
