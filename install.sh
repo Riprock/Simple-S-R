@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-echo "this is just here as a place holder"
+apt update
+apt full-upgrade
+apt install python
+pip install flask

@@ -67,9 +67,7 @@ def prefill():
         char_count = 16
         combine_lst = []
         while char_count != 0:
-            change = 1
-            change_val = random.randint(0, 1)
-            determine = change - change_val
+            determine = random.randint(0, 1)
             if determine == 1:
                 combine_lst.append(chr(random.randint(65, 90)))
             else:

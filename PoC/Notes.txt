@@ -21,14 +21,13 @@ USeable by sales person
 Project its assigned to
 Location
 Date installed
-Ad logins
+Ad logins - Friend said that there is a way to connect to AD and push all auth to the ad server. This makes it so no auth happens on the Flask server
 Email usage
 Autotask API integration
 Auditing Functions
 
 Using Flask for WEb Development
 Flask
-Flask-SQLAlchemy
 Flask-User
 Flask-Login
 Flask-Admin

@@ -7,5 +7,5 @@ services:
   - mysql
 install:
   - pip install -q Flask==$FLASK
-  - pip install -q requirements.txt
+  - pip install -r requirements.txt
 
