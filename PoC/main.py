@@ -10,11 +10,16 @@ import random
 shipping_items = []
 @dataclass
 class Shipping:# This might be kept becuase it will help making the way to fill into the database easier
-    cli_tag: str
-    tracking_num: str
-    manufacturer: str
-    model: str
-    delievered: bool
+	cli_tag: str
+	manufacturer: str
+	model: str
+	quantity: int
+	PO_num: str
+	tick_proj: str
+	tracking_num: str
+	deliver_date: str
+	signed: bool
+
 def main():
     prefill()
     print(shipping_items)
@@ -29,7 +34,7 @@ def information_gather(): # this will be rewritten into a HTML forum
         manufacturer = input("Who is the Manufacturer:")
         model = input("What is the model Number?:")
         status = bool(input("Is the object Delivered?:"))
-        package = Shipping(cli_tag, tracking_num, manufacturer, model, status)
+        package = Shipping(cli_tag, manufacturer, model, 2, "SOmeNum", "T3234.234", tracking_num, "4/20/20202", status)
         shipping_items.append(package)
         num_of_items -= 1
     print(shipping_items)
@@ -79,13 +84,13 @@ def prefill():
     for i in track_list:
         randctl = random.randint(0,2)
         if randctl == 0:
-            package = Shipping("ABCD", i, "Fortinet", "100D", bool(random.getrandbits(1)))
+            package = Shipping("ABCD", "Fortinet", "100D", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
             shipping_items.append(package)
         elif randctl == 1:
-            package = Shipping("DEFG", i, "Ruckus", "ZoneCommander", bool(random.getrandbits(1)))
+            package = Shipping("DEFG", "Ruckus", "ZoneCommander", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
             shipping_items.append(package)
         elif randctl == 2:
-            package = Shipping("YHFG", i, "Dell", "Optiplex 1050", bool(random.getrandbits(1)))
+            package = Shipping("YHFG", "Dell", "Optiplex 1050", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
             shipping_items.append(package)
     print(shipping_items)
     check_to_recieve()
