@@ -18,3 +18,7 @@ build/
 .vscode/
 
 .env
+
+site.db
+
+*.jpg

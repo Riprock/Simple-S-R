@@ -1,12 +1,10 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect, request
+from sandr import app, db, bcrypt
+from sandr.models import User, Delievery
+from sandr.forms import LoginForm
+from flask_login import login_user, current_user, logout_user, login_required
 from dataclasses import dataclass
-from dotenv import load_dotenv
-from forms import RegistrationForm, LoginForm
-import os
 
-load_dotenv()
-app = Flask(__name__) #Sets the name of the flask program
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 @dataclass
 class Shipping:
@@ -25,7 +23,7 @@ Shipping(cli_tag='YHFG', manufacturer='Dell', model='Optiplex 1050', quantity=2,
 Shipping(cli_tag='ABCD', manufacturer='Fortinet', model='100D', quantity=2, PO_num='SOmeNum', tick_proj='P3234.234', tracking_num='NSM930P7SPXGBT58', deliver_date='4/20/20202', signed=True), 
 Shipping(cli_tag='DEFG', manufacturer='Ruckus', model='ZoneCommander', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='TA0Z0VFNI694JZ45', deliver_date='4/20/20202', signed=False)]
 
-@app.route("/")
+
 @app.route("/home")
 def home():
 	return render_template('home.html', shpmnts=temp, title="Home")
@@ -35,12 +33,7 @@ def register():
 	form = RegistrationForm()
 	return render_template('register.html', title='Register', form=form)
 
-@app.route("/login")
+@app.route("/login", methods=['POST', 'GET'])
 def login():
 	form = LoginForm()
 	return render_template('login.html', title='Login', form=form)
-
-
-
-if __name__ == "__main__":
-	app.run(debug=True)

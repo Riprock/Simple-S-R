@@ -1,12 +1,13 @@
+from sandr import db
 from datetime import datetime
-from SandR import app, login_manager
+from sandr import app, login_manager
 from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
 	return  User.query.get(int(user_id))
 
-class Delievery(db.model):
+class Delievery(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	tag = db.Column(db.String(4), nullable=False, unique=False)
 	product = db.Column(db.String, nullable=False, unique=False)
@@ -14,7 +15,7 @@ class Delievery(db.model):
 	po_num = db.Column(db.String, nullable=False, unique=False)
 	tracking = db.Column(db.String, nullable=True, unique=False)
 	date = db.Column(db.DateTime, nullable=True, unique=False)
-	signed = db.column(db.String(2), nullable=True, unique=False)
+	signed = db.Column(db.String(2), nullable=False, unique=False)
 	tickprojnum = db.Column(db.String, nullable=True, unique=False)
 	location = db.Column(db.String, nullable=True, unique=False)
 	
