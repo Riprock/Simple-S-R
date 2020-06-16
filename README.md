@@ -1,10 +1,8 @@
-# Simple S&R
-An Open source Shipping and Recieving Software
-## Todo List
-* Finish Proof of Concept
-* Start Development for a web server
+# Simple S&R 
+An Open Source Shipping and Recieving Platform designed for use by MSPs. A way of managing shipments and ticket/project associations without the need for spreadsheets
 
-## TODO for Web Side of things
-* Rewrite PoC for web
-* LDAP/AD Integration
-* Connects to some form of database
+This is being built using the Flask Framework
+
+
+
+
