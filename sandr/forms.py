@@ -10,6 +10,26 @@ class LoginForm(FlaskForm):
 	remember = BooleanField("Remember Me")
 	submit = SubmitField('Login')
 
+class RegistrationForm(FlaskForm):
+	username = StringField("Username", validators=[DataRequired()])
+	email = StringField("Email", validators=[DataRequired(), Email()])
+	first = StringField("First Name", validators=[DataRequired()])
+	last = StringField("Last Name", validators=[DataRequired()])
+	password = PasswordField("Password", validators=[DataRequired()])
+	confirm_password = PasswordField("Confirm", validators=[DataRequired(), EqualTo('password')])
+	submit = SubmitField('Create Account')
+
+	def validate_user(self, username):
+		user = User.query.filter_by(username=username.data).first()
+		if user:
+			raise ValidationError('That Username is taken')
+	
+	def validate_email(self, email):
+		email = User.query.filter_by(email=email.data).first()
+		if email:
+			raise ValidationError('Email is already in use')
+
+
 class CreateDelivery(FlaskForm):
 	tag = StringField("Client Tag",validators=[DataRequired()])
 	product = StringField("Product",validators=[DataRequired()])

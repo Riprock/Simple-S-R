@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		<fieldset>
+			<legend>Register User</legend>
+			<div>
+				{{ form.username.label() }}
+				{% if form.username.errors %}
+					{{ form.username() }}
+					<div>
+						{% for error in form.username.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.username() }}
+				{% endif %}
+			</div>
+			<div>
+				{{ form.first.label() }}
+				{% if form.first.errors %}
+					{{ form.first() }}
+					<div>
+						{% for error in form.first.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.first() }}
+					{% endif %}
+			</div>
+			<div>
+				{{ form.last.label() }}
+				{% if form.last.errors %}
+					{{ form.last() }}
+					<div>
+						{% for error in form.last.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.last() }}
+				{% endif %}
+			</div>
+			<div>
+				{{ form.email.label() }}
+				{% if form.email.errors %}
+					{{ form.email()}}
+					<div>
+						{% for error in errors %}
+						<span>{{ error }}</span>
+						{% endfor %} 
+					</div>
+				{% else %}
+					{{ form.email() }}
+				{% endif %}
+			</div>
+			<div>
+				{{ form.password.label() }}
+				{% if form.password.errors %}
+					{{form.password }}
+					<div>
+						{% for error in form.password.errors %}
+							<span> {{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{form.password() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.confirm_password.label() }}
+				{% if form.confirm_password.errors %}
+					{{ form.confirm_password() }}
+					<div>
+						{% for error in form.confirm_password.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.confirm_password() }}
+				{% endif %}
+			</div>
+		</fieldset>
+		<div>
+			{{ form.submit() }}
+		</div>
+	</form>
+</div>
+
+{% endblock content%}
