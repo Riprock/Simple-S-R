@@ -27,10 +27,18 @@ temp = [
 	]
 
 @app.route("/home")
+@login_required
 def home():
 	return render_template('home.html', shpmnts=temp, title="Home")
 
-@app.route("/register")
+@app.route("/thome")
+@login_required
+def thome():
+	return render_template('thome.html', shpmnts=temp, title="Test")
+
+
+@app.route("/register", methods = ['POST', 'GET'])
+@login_required
 def register():
 	if current_user.is_authenticated:
 		return redirect(url_for('home'))
@@ -47,9 +55,31 @@ def register():
 @app.route("/", methods=['POST', 'GET'])
 @app.route("/login", methods=['POST', 'GET'])
 def login():
+	if current_user.is_authenticated:
+		return redirect(url_for('home'))
 	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(username=form.username.data).first()
+		if user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user, remember=form.remember.data)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('home'))
+		else:
+			flash('Login Failed check username and pass')
 	return render_template('login.html', title='Login', form=form)
 
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('login'))
+
 @app.route("/account")
+@login_required
 def account():
-	return render_template('account.html', title="account")
+	return render_template('account.html', title="Account")
+
+@app.route("/create")
+@login_required
+def create():
+	return render_template('create.html', title="Create")

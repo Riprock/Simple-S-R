@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from sandr.models import User
 from flask_login import current_user
@@ -36,7 +36,7 @@ class CreateDelivery(FlaskForm):
 	quanity = StringField("Quanity",validators=[DataRequired()])
 	po_num = StringField("PO #",validators=[DataRequired()])
 	tracking = StringField("Tracking #",validators=[DataRequired()])
-	date = 1
-	signed = 1
+	date = DateField("Delievery Date", format='%m-%d-%Y')
+	signed = BooleanField("Signed for?")
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+	{% if shpmnts %}
+		{% for order in shpmnts%}
+		<div>
+			<ul>
+				<li>Tag: {{ order.cli_tag }}</li>
+				<li>Maker: {{ order.manufacturer }}</li>
+				<li>Model: {{ order.model }}</li>
+				<li>Amnt: {{ order.quantity}}</li>
+				<li>PO#: {{ order.PO_num }}</li>
+				<li>Tick/Proj: {{ order.tick_proj}}</li>
+				<li>Tracking Num: {{ order.tracking_num }}</li>
+				<li>Deliver Date: {{ order.deliver_date }}</li>
+				<li>Signed: {{ order.signed }}</li>
+
+			</ul>
+		</div>
+		{% endfor %}
+	{% endif %}
+</div>
+{% endblock content %}
