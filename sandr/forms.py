@@ -40,3 +40,24 @@ class CreateDelivery(FlaskForm):
 	signed = BooleanField("Signed for?")
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
+	submit = SubmitField("Create Delievery")
+
+
+class UpdateAccountForm(FlaskForm):
+	first = StringField("First Name", validators=[DataRequired()])
+	last = StringField("Last Name", validators=[DataRequired()])
+	username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+	email = StringField("Email", validators=[DataRequired(), Email()])
+	submit = SubmitField('Update!')
+
+	def validate_username(self, username):
+		if username.data != current_user.username:
+			user = User.query.filter_by(username=username.data).first()
+			if user:
+				raise ValidationError('That username is taken')
+
+	def validate_email(self, email):
+		if email.data != current_user.email:
+			email = User.query.filter_by(email=email.data).first()
+			if email:
+				raise ValidationError('That email is in use')

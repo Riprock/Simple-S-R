@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from sandr import app, db, bcrypt
 from sandr.models import User, Delievery
-from sandr.forms import LoginForm, RegistrationForm
+from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm
 from flask_login import login_user, current_user, logout_user, login_required
 from dataclasses import dataclass
 
@@ -40,8 +40,6 @@ def thome():
 @app.route("/register", methods = ['POST', 'GET'])
 @login_required
 def register():
-	if current_user.is_authenticated:
-		return redirect(url_for('home'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
 		hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -74,12 +72,25 @@ def logout():
 	logout_user()
 	return redirect(url_for('login'))
 
-@app.route("/account")
+@app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-	return render_template('account.html', title="Account")
+	form = UpdateAccountForm()
+	if form.validate_on_submit():
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		db.session.commit()
+		flash('Accoount has been updated')
+		return redirect(url_for('account'))
+	elif request.method == "GET":
+		form.first.data = current_user.first
+		form.last.data = current_user.last
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+	return render_template('account.html', title="Account", form=form)
 
 @app.route("/create")
 @login_required
 def create():
-	return render_template('create.html', title="Create")
+	form = CreateDelivery()
+	return render_template('create.html', title="Create", form=form)

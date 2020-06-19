@@ -5,7 +5,118 @@
 		{{ form.hidden_tag() }}
 		<fieldset>
 			<legend>Create a new Shippment</legend>
+			<div> 
+				{{ form.tag.label() }}
+				{% if form.tag.errors %}
+					{{ form.tag() }}
+					<div>
+						{% for error in form.tag.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.tag() }}
+					{% endif %}
+			</div>
+			<div> 
+				{{ form.product.label() }}
+				{% if form.product.errors %}
+					{{ form.product() }}
+					<div>
+						{% for error in form.product.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.product() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.quanity.label() }}
+				{% if form.quanity.errors %}
+					{{ form.quanity() }}
+					<div>
+						{% for error in form.quanity.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.quanity() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.po_num.label() }}
+				{% if form.po_num.errors %}
+					{{ form.po_num() }}
+					<div>
+						{% for error in form.po_num.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.po_num() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.tracking.label() }}
+				{% if form.tracking.errors %}
+					{{ form.tracking() }}
+					<div>
+						{% for error in form.tracking.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.tracking() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.date.label() }}
+				{% if form.date.errors %}
+					{{ form.date() }}
+					<div>
+						{% for error in form.date.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.date() }}
+				{% endif %}
+			</div>
+			<div>
+				{{ form.signed }}
+				{{ form.signed.label() }}
+			</div>
+			<div> 
+				{{ form.tickprojnum.label }}
+				{% if form.tickprojnum.errors %}
+					{{ form.tickprojnum() }}
+					<div>
+						{% for error in form.tickprojnum.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.tickprojnum() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.location.label }}
+				{% if form.location.errors %}
+					{{ form.location() }}
+					<div>
+						{% for error in form.location.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.location() }}
+				{% endif %}
+			</div>
 		</fieldset>
+		<div>
+			{{ form.submit() }}
+		</div>
 	</form>
 </div>
 {% endblock content %}
