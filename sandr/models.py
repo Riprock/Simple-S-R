@@ -7,20 +7,21 @@ from flask_login import UserMixin
 def load_user(user_id):
 	return  User.query.get(int(user_id))
 
-class Delievery(db.Model):
+class Delivery(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	tag = db.Column(db.String(4), nullable=False, unique=False)
 	product = db.Column(db.String, nullable=False, unique=False)
 	quanity = db.Column(db.Integer, nullable=False, unique=False)
 	po_num = db.Column(db.String, nullable=False, unique=False)
-	tracking = db.Column(db.String, nullable=True, unique=False)
-	date = db.Column(db.DateTime, nullable=True, unique=False)
-	signed = db.Column(db.String(2), nullable=False, unique=False)
-	tickprojnum = db.Column(db.String, nullable=True, unique=False)
+	tracking = db.Column(db.String, nullable=False, unique=False)
+	#date = db.Column(db.DateTime, nullable=True, unique=False)
+	sig = db.Column(db.String(2), nullable=True, unique=False)
+	tickprojnum = db.Column(db.String, nullable=False, unique=False)
 	location = db.Column(db.String, nullable=True, unique=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+	client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=True)
 	
-	def __repr(self):
-		return f"Delievery(client: {self.tag}, Product: {self.product}, Quantity: {self.quanity})"
+	def __repr__(self):
+		return f"Delivery(ID: {self.id},Product: {self.product}, Quantity: {self.quanity})"
 
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
@@ -29,10 +30,18 @@ class User(db.Model, UserMixin):
 	username = db.Column(db.String(20), unique=True, nullable=False)
 	email = db.Column(db.String(120), unique=True, nullable=False)
 	password = db.Column(db.String(60), nullable=False)
-	#title = db.Column(db.String(), nullable=False)
+	deliveries = db.relationship('Delivery', backref="engineer", lazy=True)
 
 	def __repr__(self):
-		return f"User('{self.username}', '{self.email}',)"
+		return f"User('{self.username}', '{self.email}')"
 
-class Customer(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
+class Client(db.Model):
+	#id = db.Column(db.Integer, primary_key=True)
+	#tag = db.Column(db.String(4), nullable=False, unique=True) 
+	id = db.Column(db.String(4), primary_key=True)#Note this as a pitfall as its designed for current MSP. Make this customizeable so other MSPs can use their unique identifiers then work on fallback to ID
+	name = db.Column(db.String, nullable=False, unique=True)
+	deliveries = db.relationship('Delivery', backref="client", lazy=True)
+	
+	def __repr__(self):
+		return f"Client('{self.name}', '{self.id}')"
+		#return f"Client('{self.tag}', '{self.name}', '{self.id}')"

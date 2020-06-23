@@ -1,44 +1,21 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from sandr import app, db, bcrypt
-from sandr.models import User, Delievery
+from sandr.models import User, Delivery, Client
 from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm
 from flask_login import login_user, current_user, logout_user, login_required
 from dataclasses import dataclass
 
-
-@dataclass
-class Shipping:
-	cli_tag: str
-	manufacturer: str
-	model: str
-	quantity: int
-	PO_num: str
-	tick_proj: str
-	tracking_num: str
-	deliver_date: str
-	signed: bool
-
-temp = [
-	Shipping(cli_tag='ASDF', manufacturer='Ruckus', model='ZoneCommander', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='74FW1B24V0R33234', deliver_date='4/20/20202', signed=True), 
-	Shipping(cli_tag='DEFG', manufacturer='Ruckus', model='ZoneCommander', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='G8J87GH2488SNDZ8', deliver_date='4/20/20202', signed=False), 
-	Shipping(cli_tag='YHFG', manufacturer='Dell', model='Optiplex 1050', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='C32019MW8S95RT6T', deliver_date='4/20/20202', signed=False), 
-	Shipping(cli_tag='QWER', manufacturer='Apple', model='Iphne 7', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='T87HJHouih(*&)(kjbik', deliver_date='4/20/20202', signed=True), 
-	Shipping(cli_tag='YHJS', manufacturer='Cisco', model='Phone', quantity=2, PO_num='SOmeNum', tick_proj='T3234.234', tracking_num='HTIH707070GVUYV876', deliver_date='4/20/20202', signed=True)
-	]
-
 @app.route("/home")
-@login_required
 def home():
-	return render_template('home.html', shpmnts=temp, title="Home")
+	shpmnts = Delivery.query.all()
+	return render_template('home.html', title="Home", shpmnts=shpmnts)
 
 @app.route("/thome")
-@login_required
 def thome():
 	return render_template('thome.html', shpmnts=temp, title="Test")
 
 
 @app.route("/register", methods = ['POST', 'GET'])
-@login_required
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
@@ -67,13 +44,11 @@ def login():
 	return render_template('login.html', title='Login', form=form)
 
 @app.route('/logout')
-@login_required
 def logout():
 	logout_user()
 	return redirect(url_for('login'))
 
 @app.route("/account", methods=['GET', 'POST'])
-@login_required
 def account():
 	form = UpdateAccountForm()
 	if form.validate_on_submit():
@@ -89,8 +64,29 @@ def account():
 		form.email.data = current_user.email
 	return render_template('account.html', title="Account", form=form)
 
-@app.route("/create")
-@login_required
+@app.route("/create", methods=['GET', 'POST'])
 def create():
 	form = CreateDelivery()
+	if form.validate_on_submit():
+		delivery = Delivery(
+			tag = form.tag.data,
+			product = form.product.data,
+			quanity = form.quanity.data,
+			po_num = form.po_num.data,
+			tracking = form.tracking.data,
+			#date = form.date.data,
+			sig = form.sig.data,
+			tickprojnum = form.tickprojnum.data,
+			location = form.location.data
+		)
+		db.session.add(delivery)
+		db.session.commit()
+		flash("New Delivery has been added")
+		return redirect(url_for('home'))
 	return render_template('create.html', title="Create", form=form)
+
+@app.route("/client/<tag>")
+def client(tag):
+	id = Client.id
+	client_shp = Client.query.filter_by(tag=tag).all()
+	return render_template("client.html", title="ClientName", shpmts=client_shp)

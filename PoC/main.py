@@ -9,16 +9,14 @@ from dataclasses import dataclass
 import random
 shipping_items = []
 @dataclass
-class Shipping:# This might be kept becuase it will help making the way to fill into the database easier
-	cli_tag: str
-	manufacturer: str
-	model: str
-	quantity: int
-	PO_num: str
-	tick_proj: str
-	tracking_num: str
-	deliver_date: str
-	signed: bool
+class Delivery:# This might be kept becuase it will help making the way to fill into the database easier
+    product: str
+    quanity: int
+    po_num: str
+    tracking: str
+    sig: bool
+    tickprojnum: str
+    location: str
 
 def main():
     prefill()
@@ -29,12 +27,14 @@ def information_gather(): # this will be rewritten into a HTML forum
     num_of_items = int(input("How many items to input into the list?:"))
     while num_of_items != 0:
         print("Item #" + str(num_of_items) +" "+ "Information")
-        cli_tag = input("What is the Client Tag?:")
-        tracking_num = input("What is the Tracking Number:")
-        manufacturer = input("Who is the Manufacturer:")
-        model = input("What is the model Number?:")
-        status = bool(input("Is the object Delivered?:"))
-        package = Shipping(cli_tag, manufacturer, model, 2, "SOmeNum", "T3234.234", tracking_num, "4/20/20202", status)
+        product = input("What product is this:")
+        quanity = int(input("How many?: "))
+        po_num = input("What is the PO Number:")
+        tracking = input("What is the Tracking Number:")
+        sig = bool(input("Is the object Delivered?:"))
+        tick_proj = input("What ticket or project is this for?:")
+        location = input("WHere is the product Located:")
+        package = Delivery(tag, product, quanity, po_num, tracking, sig, tick_proj, location)
         shipping_items.append(package)
         num_of_items -= 1
     print(shipping_items)
@@ -47,15 +47,10 @@ def check_to_recieve(): # Same concept as this but instead this will be pulling 
            for i in shipping_items:
                if i.tracking_num == sn:
                    if i.delievered == True:
-                       print(i.manufacturer + i.model + "Has been delievered")
+                       print(i.product + "Has been delievered")
                        break
                    else:
-                        print(i.manufacturer + " " + i.model + " " + "Has not been delievered")
-       elif refrence == "TAG" or refrence =="Tag":
-           tag = input("What is the client tag?:")
-           for i in shipping_items:
-               if tag == i.cli_tag:
-                   print("Tracking Number" + i.tracking_num + "\n" + "Device:" + i.manufacturer + i.model + "\n")
+                        print(i.product + "Has not been delievered")
        elif refrence == "add":
             information_gather()
        else:
@@ -84,13 +79,13 @@ def prefill():
     for i in track_list:
         randctl = random.randint(0,2)
         if randctl == 0:
-            package = Shipping("ABCD", "Fortinet", "100D", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
+            package = Delivery("Fortinet 100D", 2, "SOmeNum", i, bool(random.getrandbits(1)), "T20200718.00012", "Deploy Room")
             shipping_items.append(package)
         elif randctl == 1:
-            package = Shipping("DEFG", "Ruckus", "ZoneCommander", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
+            package = Delivery("Ruckus ZoneCommander", 2, "SOmeNum",i, bool(random.getrandbits(1)), "T20190905", "In Basement")
             shipping_items.append(package)
         elif randctl == 2:
-            package = Shipping("YHFG", "Dell", "Optiplex 1050", 2, "SOmeNum", "T3234.234", i, "4/20/20202", bool(random.getrandbits(1)))
+            package = Delivery("Dell Optiplex 1050", 2, "SOmeNum", i, bool(random.getrandbits(1)), "T20201215.00054", "In Shipping" )
             shipping_items.append(package)
     print(shipping_items)
     check_to_recieve()

@@ -19,6 +19,8 @@ build/
 
 .env
 
-site.db
+*.db
 
 *.jpg
+
+sqlite-tools/

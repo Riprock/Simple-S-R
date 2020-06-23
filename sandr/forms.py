@@ -36,11 +36,11 @@ class CreateDelivery(FlaskForm):
 	quanity = StringField("Quanity",validators=[DataRequired()])
 	po_num = StringField("PO #",validators=[DataRequired()])
 	tracking = StringField("Tracking #",validators=[DataRequired()])
-	date = DateField("Delievery Date", format='%m-%d-%Y')
-	signed = BooleanField("Signed for?")
+	date = DateField("Delivery Date", format='%m-%d-%Y')
+	sig = BooleanField("Signed for?")
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
-	submit = SubmitField("Create Delievery")
+	submit = SubmitField("Create Delivery")
 
 
 class UpdateAccountForm(FlaskForm):
@@ -61,3 +61,15 @@ class UpdateAccountForm(FlaskForm):
 			email = User.query.filter_by(email=email.data).first()
 			if email:
 				raise ValidationError('That email is in use')
+
+class UpdateDelivery(FlaskForm):
+	tag = StringField("Client Tag",validators=[DataRequired()])
+	product = StringField("Product",validators=[DataRequired()])
+	quanity = StringField("Quanity",validators=[DataRequired()])
+	po_num = StringField("PO #",validators=[DataRequired()])
+	tracking = StringField("Tracking #",validators=[DataRequired()])
+	date = DateField("Delivery Date", format='%m-%d-%Y')
+	signed = BooleanField("Signed for?")
+	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
+	location = StringField("location",validators=[DataRequired()])
+	submit = SubmitField("Create Delivery")
