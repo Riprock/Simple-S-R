@@ -87,6 +87,13 @@ def create():
 
 @app.route("/client/<tag>")
 def client(tag):
-	id = Client.id
-	client_shp = Client.query.filter_by(tag=tag).all()
-	return render_template("client.html", title="ClientName", shpmts=client_shp)
+	customer_id = db.session.query(Client.id, Client.tag).filter(Client.tag == tag).all()[0][0]
+	cli = Client.query.get_or_404(customer_id)
+	client_shp = cli.deliveries
+	name = cli.name
+	return render_template("client.html", title= tag, shpmnts=client_shp, name=name, tag=tag)
+
+@app.route("/clients")
+def clients():
+	clients = Client.query.all()
+	return render_template("clients.html", clients=clients)

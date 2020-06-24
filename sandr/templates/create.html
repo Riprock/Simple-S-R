@@ -19,16 +19,29 @@
 					{% endif %}
 			</div>
 			<div> 
-				{{ form.product.label() }}
-				{% if form.product.errors %}
-					{{ form.product() }}
+				{{ form.manufacturer.label() }}
+				{% if form.manufacturer.errors %}
+					{{ form.manufacturer() }}
 					<div>
-						{% for error in form.product.errors %}
+						{% for error in form.manufacturer.errors %}
 						<span>{{ error }}</span>
 						{% endfor %}
 					</div>
 				{% else %}
-					{{ form.product() }}
+					{{ form.manufacturer() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.model.label() }}
+				{% if form.model.errors %}
+					{{ form.model() }}
+					<div>
+						{% for error in form.model.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.model() }}
 				{% endif %}
 			</div>
 			<div> 
@@ -70,7 +83,7 @@
 					{{ form.tracking() }}
 				{% endif %}
 			</div>
-			<!--<div> 
+			<div> 
 				{{ form.date.label() }}
 				{% if form.date.errors %}
 					{{ form.date() }}
@@ -82,7 +95,7 @@
 				{% else %}
 					{{ form.date() }}
 				{% endif %}
-			</div>-->
+			</div>
 			<div>
 				{{ form.sig }}
 				{{ form.sig.label() }}
@@ -111,6 +124,19 @@
 					</div>
 				{% else %}
 					{{ form.location() }}
+				{% endif %}
+			</div>
+			<div> 
+				{{ form.ship_co.label }}
+				{% if form.ship_co.errors %}
+					{{ form.ship_co() }}
+					<div>
+						{% for error in form.ship_co.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.ship_co() }}
 				{% endif %}
 			</div>
 		</fieldset>

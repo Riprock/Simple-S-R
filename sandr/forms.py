@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from sandr.models import User
 from flask_login import current_user
@@ -32,7 +33,8 @@ class RegistrationForm(FlaskForm):
 
 class CreateDelivery(FlaskForm):
 	tag = StringField("Client Tag",validators=[DataRequired()])
-	product = StringField("Product",validators=[DataRequired()])
+	manufacturer = StringField("Product",validators=[DataRequired()])
+	model = StringField("Product",validators=[DataRequired()])
 	quanity = StringField("Quanity",validators=[DataRequired()])
 	po_num = StringField("PO #",validators=[DataRequired()])
 	tracking = StringField("Tracking #",validators=[DataRequired()])
@@ -40,6 +42,7 @@ class CreateDelivery(FlaskForm):
 	sig = BooleanField("Signed for?")
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
+	ship_co = StringField("Shipping Company", validators=[DataRequired()])
 	submit = SubmitField("Create Delivery")
 
 
