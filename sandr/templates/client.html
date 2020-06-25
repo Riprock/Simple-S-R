@@ -9,12 +9,15 @@
 		<div>
 			<ul>
 				<li>Tag: {{ order.client.tag }}</li>
-				<li>Model: {{ order.product }}</li>
+				<li>Manufacturer {{order.manufacturer }}</li>
+				<li>Model: {{ order.model }}</li>
 				<li>Amnt: {{ order.quanity}}</li>
 				<li>PO#: {{ order.po_num }}</li>
-				<li>Tick/Proj: {{ order.tickprojnum }}</li>
 				<li>Tracking Num: {{ order.tracking }}</li>
-				<!--<li>Deliver Date: {{ order.date }}</li>-->
+				<li>Tick/Proj: {{ order.tickprojnum }}</li>
+				<li>Location: {{ order.location }}</li>
+				<li>Deliver Date: {{ order.date }}</li>
+				<li>Deliver Shipping Company: {{ order.ship_co }}</li>
 				<li>Signed:
 					{% if order.sig == "1" %}
 						Yes By Dave

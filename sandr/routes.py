@@ -3,7 +3,7 @@ from sandr import app, db, bcrypt
 from sandr.models import User, Delivery, Client
 from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm
 from flask_login import login_user, current_user, logout_user, login_required
-from dataclasses import dataclass
+import json
 
 @app.route("/home")
 def home():
@@ -66,18 +66,25 @@ def account():
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-	form = CreateDelivery()
+	form = CreateDelivery()	
+	with open(".\sandr\manufacturers.json", "r") as file:
+		manu = json.load(file)
+		form.manufacturer.choices = [(i['data'], i['name']) for i in manu['manufacturers']]
+	clients = Client.query.all()
+	form.tag.choices = [(i.tag, i.name) for i in clients]
 	if form.validate_on_submit():
 		delivery = Delivery(
-			tag = form.tag.data,
-			product = form.product.data,
+			manufacturer= form.manufacturer.data,
+			model = form.model.data,
 			quanity = form.quanity.data,
 			po_num = form.po_num.data,
 			tracking = form.tracking.data,
-			#date = form.date.data,
+			date = form.date.data,
 			sig = form.sig.data,
 			tickprojnum = form.tickprojnum.data,
-			location = form.location.data
+			location = form.location.data,
+			ship_co = form.ship_co.data,
+			client_id = db.session.query(Client.id, Client.tag).filter(Client.tag == form.tag.data).all()[0][0],
 		)
 		db.session.add(delivery)
 		db.session.commit()
@@ -97,3 +104,5 @@ def client(tag):
 def clients():
 	clients = Client.query.all()
 	return render_template("clients.html", clients=clients)
+
+

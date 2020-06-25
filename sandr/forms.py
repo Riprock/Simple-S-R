@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, IntegerField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from sandr.models import User
@@ -30,22 +30,22 @@ class RegistrationForm(FlaskForm):
 		if email:
 			raise ValidationError('Email is already in use')
 
-
+	
 class CreateDelivery(FlaskForm):
-	tag = StringField("Client Tag",validators=[DataRequired()])
-	manufacturer = StringField("Product",validators=[DataRequired()])
-	model = StringField("Product",validators=[DataRequired()])
-	quanity = StringField("Quanity",validators=[DataRequired()])
+	tag = SelectField("Client Tag")
+	manufacturer = SelectField("Manufacturer", coerce=str)#StringField("Manufacturer",validators=[DataRequired()])
+	model = StringField("Model",validators=[DataRequired()])
+	quanity = IntegerField("Quanity",validators=[DataRequired()])
 	po_num = StringField("PO #",validators=[DataRequired()])
 	tracking = StringField("Tracking #",validators=[DataRequired()])
-	date = DateField("Delivery Date", format='%m-%d-%Y')
+	date = DateField("Delivery Date")
 	sig = BooleanField("Signed for?")
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
 	ship_co = StringField("Shipping Company", validators=[DataRequired()])
 	submit = SubmitField("Create Delivery")
 
-
+			
 class UpdateAccountForm(FlaskForm):
 	first = StringField("First Name", validators=[DataRequired()])
 	last = StringField("Last Name", validators=[DataRequired()])

@@ -1,0 +1,36 @@
+{
+	"manufacturers": [
+		{
+			"name": "Fortinet",
+			"data": "Fortinet"
+		},
+		{
+			"name": "Cisco",
+			"data": "Cisco"
+		},
+		{
+			"name": "Barracuda",
+			"data": "Barracuda"
+		},
+		{
+			"name": "Datto",
+			"data": "Datto"
+		},
+		{
+			"name": "Dell",
+			"data": "Dell"
+		},
+		{
+			"name": "Extreme",
+			"data": "Extreme"
+		},
+		{
+			"name": "HP Enterprise",
+			"data": "HP Enterprise"
+		},
+		{
+			"name": "Ruckus",
+			"data": "Ruckus"
+		}
+	]
+}
