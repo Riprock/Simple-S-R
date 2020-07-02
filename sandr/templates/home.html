@@ -15,6 +15,7 @@
 				<li>Location: {{ order.location }}</li>
 				<li>Deliver Date: {{ order.date }}</li>
 				<li>Deliver Shipping Company: {{ order.ship_co }}</li>
+				<li>Engineer: {{ order.engineer.first}} {{ order.engineer.last}} </li>
 				<li>Signed:
 					{% if order.sig == "1" %}
 						Yes By Dave

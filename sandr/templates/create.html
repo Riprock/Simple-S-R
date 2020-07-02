@@ -139,6 +139,19 @@
 					{{ form.ship_co() }}
 				{% endif %}
 			</div>
+			<div> 
+				{{ form.engineer.label() }}
+				{% if form.engineer.errors %}
+					{{ form.engineer() }}
+					<div>
+						{% for error in form.engineer.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.engineer() }}
+				{% endif %}
+			</div>
 		</fieldset>
 		<div>
 			{{ form.submit() }}

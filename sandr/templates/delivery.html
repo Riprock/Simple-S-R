@@ -1,3 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
+{% if delivery%}
+<div>
+	<ul>
+		<li>Tag: {{ delivery.client.tag }}</li>
+		<li>Manufacturer {{delivery.manufacturer }}</li>
+		<li>Model: {{ delivery.model }}</li>
+		<li>Amnt: {{deliveryr.quanity}}</li>
+		<li>PO#: {{ delivery.po_num }}</li>
+		<li>Tracking Num: {{ delivery.tracking }}</li>
+		<li>Tick/Proj: {{ delivery.tickprojnum }}</li>
+		<li>Location: {{delivery.location }}</li>
+		<li>Deliver Date: {{ delivery.date }}</li>
+		<li>Deliver Shipping Company: {{ delivery.ship_co }}</li>
+		<li>Engineer: {{ delivery.engineer.first}} {{ delivery.engineer.last}} </li>
+	</ul>
+</div>
+
+{% endif %}
 {% endblock content %}

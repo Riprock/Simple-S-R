@@ -43,6 +43,7 @@ class CreateDelivery(FlaskForm):
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
 	ship_co = StringField("Shipping Company", validators=[DataRequired()])
+	engineer = SelectField("Engineer", coerce=str)
 	submit = SubmitField("Create Delivery")
 
 			
@@ -76,3 +77,8 @@ class UpdateDelivery(FlaskForm):
 	tickprojnum = StringField("Ticket/Project #",validators=[DataRequired()])
 	location = StringField("location",validators=[DataRequired()])
 	submit = SubmitField("Create Delivery")
+
+class CreateClient(FlaskForm):
+	name = StringField("Client Name", validators=[DataRequired()])
+	tag = StringField("Client Tag", validators=[DataRequired()])
+	submit = SubmitField("Add Client")

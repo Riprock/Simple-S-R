@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from sandr import app, db, bcrypt
 from sandr.models import User, Delivery, Client
-from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm
+from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm, CreateClient
 from flask_login import login_user, current_user, logout_user, login_required
 import json
 
@@ -15,7 +15,7 @@ def thome():
 	return render_template('thome.html', shpmnts=temp, title="Test")
 
 
-@app.route("/register", methods = ['POST', 'GET'])
+@app.route("/new/user", methods = ['POST', 'GET'])
 def register():
 	form = RegistrationForm()
 	if form.validate_on_submit():
@@ -64,14 +64,17 @@ def account():
 		form.email.data = current_user.email
 	return render_template('account.html', title="Account", form=form)
 
-@app.route("/create", methods=['GET', 'POST'])
+@app.route("/new/delivery", methods=['GET', 'POST'])
 def create():
 	form = CreateDelivery()	
 	with open(".\sandr\manufacturers.json", "r") as file:
 		manu = json.load(file)
 		form.manufacturer.choices = [(i['data'], i['name']) for i in manu['manufacturers']]
+	query = db.session.query(User.username, User.first, User.last).all()
+	form.engineer.choices = [(i[0], f"{i[1]} {i[2]}") for i in query]
 	clients = Client.query.all()
 	form.tag.choices = [(i.tag, i.name) for i in clients]
+	print(form.manufacturer.data)
 	if form.validate_on_submit():
 		delivery = Delivery(
 			manufacturer= form.manufacturer.data,
@@ -85,6 +88,7 @@ def create():
 			location = form.location.data,
 			ship_co = form.ship_co.data,
 			client_id = db.session.query(Client.id, Client.tag).filter(Client.tag == form.tag.data).all()[0][0],
+			user_id = db.session.query(User.id, User.username).filter(User.username == form.username.data).all()[0][0]
 		)
 		db.session.add(delivery)
 		db.session.commit()
@@ -105,4 +109,26 @@ def clients():
 	clients = Client.query.all()
 	return render_template("clients.html", clients=clients)
 
+@app.route("/new/client")
+def new_client():
+	form = CreateClient()
+	if form.validate_on_submit():
+		client = Client(tag=form.tag.data, name=form.name.data)
+		db.session.add(client)
+		db.session.commit()
+		flash('New Client has been added')
+		return redirect(url_for('home'))
+	return render_template("newcli.html", form=form)
+'''
+@app.route("/delivery/<int:id>")
+	def delivery(id):
+		delivery = Delivery.query.get_or_404(id):
+		return render_template("delivery.html", title="Deliver")
+@app.route("/delivery/<int:id>/update")
+def delivery_update(id):
+	delivery = Delivery.query.get_or_404(id)
+	form = CreateDelivery()
+	if form.validate_on_submit():
+		delivery.
 
+	'''

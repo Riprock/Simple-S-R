@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+	<form method="POST" action="">
+		{{form.hidden_tag()}}
+		<fieldset>
+			<legend>Add A Client</legend>
+			<div>
+				{{ form.name.label() }}
+				{% if form.name.errors %}
+					{{ form.name() }}
+					<div>
+						{% for error in form.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %} 
+					</div>
+				{% else %}
+					{{ form.name() }}
+				{% endif %}
+			</div>
+			<div>
+				{{ form.tag.label() }}
+				{% if form.name.errors %}
+					{{ form.name() }}
+					<div>
+						{% for error in form.tag.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+						{{ form.tag() }}
+					{% endif %}
+			</div>
+		</fieldset>
+		<div>
+			{{ form.submit() }}
+		</div>
+	</form>
+</div>
+{% endblock content %}
