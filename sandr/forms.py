@@ -82,3 +82,7 @@ class CreateClient(FlaskForm):
 	name = StringField("Client Name", validators=[DataRequired()])
 	tag = StringField("Client Tag", validators=[DataRequired()])
 	submit = SubmitField("Add Client")
+
+class Search(FlaskForm):
+	search_field = StringField("Search", validators=[DataRequired()])
+	submit = SubmitField("Search")

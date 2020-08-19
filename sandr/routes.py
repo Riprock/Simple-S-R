@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request
 from sandr import app, db, bcrypt
 from sandr.models import User, Delivery, Client
-from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm, CreateClient
+from sandr.forms import LoginForm, RegistrationForm, CreateDelivery, UpdateAccountForm, CreateClient, Search
 from flask_login import login_user, current_user, logout_user, login_required
 import json
 
@@ -119,6 +119,16 @@ def new_client():
 		flash('New Client has been added')
 		return redirect(url_for('home'))
 	return render_template("newcli.html", form=form)
+
+''' For now this only works with client tags, trying to get basic functionality at least started before I start expanding. Still deciding if I want searching to be its own page or not'''
+@app.route("/search")
+def search():
+	form = Search()
+	if form.validate_on_submit():
+		customer_id = db.session.query(Client.id, Client.tag).filter(Client.tag == form.input_field.data).all()[0][0]
+		cli = Client.query.get_or_404(customer_id)
+	return render_template("search.html", title="Search", form=form)
+
 '''
 @app.route("/delivery/<int:id>")
 	def delivery(id):

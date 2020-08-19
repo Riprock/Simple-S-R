@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+            <div>
+                {{ form.search_field.label() }}
+                {% if form.search_field.errors %}
+                    {{ form.search_field() }}
+                    <div>
+                        {% for error in form.search_field.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{form.search_field() }}
+                    {% endif %}
+            </div>
+        <div>
+			{{ form.submit() }}
+		</div>
+    </form>
+</div>
+{% endblock content %}

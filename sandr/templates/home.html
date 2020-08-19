@@ -2,31 +2,51 @@
 {% block content %}
 <div>
 	{% if shpmnts %}
-		{% for order in shpmnts%}
 		<div>
-			<ul>
-				<li>Tag: {{ order.client.tag }}</li>
-				<li>Manufacturer {{order.manufacturer }}</li>
-				<li>Model: {{ order.model }}</li>
-				<li>Amnt: {{ order.quanity}}</li>
-				<li>PO#: {{ order.po_num }}</li>
-				<li>Tracking Num: {{ order.tracking }}</li>
-				<li>Tick/Proj: {{ order.tickprojnum }}</li>
-				<li>Location: {{ order.location }}</li>
-				<li>Deliver Date: {{ order.date }}</li>
-				<li>Deliver Shipping Company: {{ order.ship_co }}</li>
-				<li>Engineer: {{ order.engineer.first}} {{ order.engineer.last}} </li>
-				<li>Signed:
-					{% if order.sig == "1" %}
-						Yes By Dave
-					{% else %}
-						No
-					{% endif %}
-				</li>
-
-			</ul>
-		</div>
-		{% endfor %}
+			<table>
+				<thead>
+					<tr>
+						<th colspan="12">The table Head</th>
+					</tr>
+					<tr>
+						<th>Tag</th>
+						<th>Manufacturer</th>
+						<th>Model</th>
+						<th>Amnt</th>
+						<th>PO#</th>
+						<th>Tracking Num</th>
+						<th>Tick/Proj</th>
+						<th>Location</th>
+						<th>Deliver Date</th>
+						<th>Shipping Company</th>
+						<th>Engineer</th>
+						<th>Signed</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for order in shpmnts%}
+					<tr>
+						<td>{{ order.client.tag }}</td>
+						<td>{{order.manufacturer }}</td>
+						<td>{{ order.model }}</td>
+						<td>{{ order.quanity}}</td>
+						<td>{{ order.po_num }}</td>
+						<td>{{ order.tracking }}</td>
+						<td>{{ order.tickprojnum }}</td>
+						<td>{{ order.location }}</td>
+						<td>{{ order.date }}</td>
+						<td>{{ order.ship_co }}</td>
+						<td>{{ order.engineer.first}} {{ order.engineer.last}} </td>
+						{% if order.sig == "1" %}
+							<td>Yes By Dave</td>
+						{% else %}
+							<td style="color:red">No</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 	{% endif %}
 </div>
 {% endblock content %}
